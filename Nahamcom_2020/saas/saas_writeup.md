@@ -11,7 +11,7 @@ Checksec's output is:
     NX:       NX enabled
     PIE:      PIE enabled
 ```
-So this is not looking good, everything is enabled. Analyzing the binary with strings doesn't reveal nothing really important, so the next step is to execute the binary.
+So this is not looking good, everything is enabled. Analyzing the binary with strings doesn't reveal anything really important, so the next step is to execute the binary.
 
 ```
 $ ./saas 
@@ -26,7 +26,7 @@ Enter r9 (decimal): 0
 Enter r8 (decimal): 0
 Rax: 0x0
 ```
-We are basically in a while true which lets us make syscalls with arbitrary parameters (and it shows us the return value). The first thing that came into my mind was to try and call execve, but the program will prevent us from calling some blacklisted syscalls (such as execve). The complete list of all the blocked syscall is: 0x3b, 0x39, 0x38, 0x3e, 0x65, 0xc8, 0x142.
+We are basically in a while true which lets us make syscalls with arbitrary parameters (and it shows us the return value), so we don't really care about the checksec's result. The first thing that came into my mind was to try and call execve, but the program will prevent us from calling some blacklisted syscalls (such as execve). The complete list of all the blocked syscall is: 0x3b, 0x39, 0x38, 0x3e, 0x65, 0xc8, 0x142.
 
 ## Solution
 
