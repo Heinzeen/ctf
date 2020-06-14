@@ -43,11 +43,13 @@ write(stdout, addr, 64);
 ```
 
 We have access to all this syscalls, we just need to convert our parameters to decimal:
+```
 PROT_READ|PROT_WRITE = 3
 MAP_PRIVATE|MAP_ANONYMOUS = 4
 0644 = 420 (0644 is octal)
 stdin = 0
 stdout = 1
+```
 
 ## Code
 At this point we just need a program that sends everything to the process' stdin, we just need to capture the retval of the mmap (for the address) and the retval of the open (for the file descriptor).
