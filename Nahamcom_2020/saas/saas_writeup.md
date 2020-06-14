@@ -54,8 +54,9 @@ stdout = 1
 ## Code
 At this point we just need a program that sends everything to the process' stdin, we just need to capture the retval of the mmap (for the address) and the retval of the open (for the file descriptor).
 The program is (in python) as follow (in this directory you will find the .py file):
-from pwn import *
 ```
+from pwn import *
+
 #p = remote("jh2i.com", 50016)
 
 p = gdb.debug("./saas", """
