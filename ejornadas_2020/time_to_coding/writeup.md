@@ -1,9 +1,10 @@
-#Time to coding
+# Time to coding
 
 The second challenge is worth 200 points and it is called \textbf{Time to Coding}. The description of the challenge says:
-
->Take a look at the python code file, and find the secret message in the file data.enc.
->Flag format: flag{string}
+```
+Take a look at the python code file, and find the secret message in the file data.enc.
+Flag format: flag{string}
+```
 
 So it seems like we have to take the data in the file *data.enc* and decrypt it using the information taken from the file *encrypt.py* (both files are given). The encrypted data is a simple string: *BBlZPqpYhG8\kJLhh\_Jh=:\}W<WKXTSZX* while the python file contains an ecnryption function:
 ```
@@ -29,7 +30,7 @@ def encrypt(data):
 
 ```
 
-#solution
+# Solution
 To solve this challenge we have to decrypt the data contained in *data.enc*; we can do that by reversing the encryption function and thus creating a decryption function.
 The encryption function is divided into three parts. It first makes a xor between every character in the plaintext and 0x2f, then it encodes the string with the base64 encryption and, in the end, it inverts the string.
 We can now easily write a python function that does the opposite and give to it as input the ecnrypted function; the decryption function (with an instruction that calls it with the right parameter) is the following:
