@@ -1,14 +1,12 @@
-#Rotate away
+# Rotate away
 The first challenge is worth 100 points and it is called **Rotate away**. The description of the challenge says:
+```
+Rotate every damn day of the year
+rxms{xqfedafmfqftueftuzs}
+Flag format: flag{string}
+```
 
->Rotate every damn day of the year
-
->rxms{xqfedafmfqftueftuzs}
-
->Flag format: flag{string}
-
-
-##Solution
+## Solution
 
 Both the name of the challenge and the first row of the description give us an hint about what we have to do; these references to the word *rotate* makes me think about **Caesar's cipher**. The third row of the description tells us that the flag starts with the word *flag*; it's easy to see that the first part of the string in the second row of the description (i.e. *rxms*) is the word *flag* where every character has been shifted by 12 position. It is reasonable to think that the second string is the flag, with every character shifted by 12 positions; to check this hypothesis I created a C program to shift the string and check the resulting string:
 
