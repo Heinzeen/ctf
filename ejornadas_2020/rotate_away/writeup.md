@@ -1,9 +1,9 @@
 #Rotate away
 The first challenge is worth 100 points and it is called **Rotate away**. The description of the challenge says:
 
->Rotate every damn day of the year
->rxms{xqfedafmfqftueftuzs}
->Flag format: flag{string}
+>Rotate every damn day of the year\\
+>rxms{xqfedafmfqftueftuzs}\\
+>Flag format: flag{string}\\
 
 ##Solution
 
